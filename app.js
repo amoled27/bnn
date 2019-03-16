@@ -11,4 +11,4 @@ app.use((req, res, next) => {
 });
 app.use('/api', deviceRoutes);
 // app.use('/', { message: hello});
-app.listen(5000);
+app.listen( process.env.PORT || 5000);
