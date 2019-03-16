@@ -10,4 +10,5 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/api', deviceRoutes);
+// app.use('/', { message: hello});
 app.listen(5000);

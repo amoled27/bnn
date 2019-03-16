@@ -15,9 +15,10 @@ exports.getDeviceVoltageThree = (req, res) => {
 }
 
 exports.postDeviceData = (req,res) => {
-    const fileData = path.join(path.dirname(process.mainModule.filename), 'data', 'data.txt');
-    fs.writeFile(fileData, req.body, function (err) {
+    const fileData = path.join(path.dirname(process.mainModule.filename), 'data', 'data.json');
+    fs.appendFile(fileData, JSON.stringify(req.body), function (err) {
         if (err) throw err;
         console.log('Saved!');
+        res.json({ message: 'data saved'});
     });
 }
