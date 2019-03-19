@@ -10,15 +10,22 @@ exports.getDeviceVoltageTwo = (req, res) => {
 }
 
 
-exports.getDeviceVoltageThree = (req, res) => {
+exports.getInfo = (req, res) => {
     res.json({ data: { voltage: 7 } });
 }
 
 exports.postDeviceData = (req,res) => {
-    const fileData = path.join(path.dirname(process.mainModule.filename), 'data', 'data.json');
+    const fileData = path.join(path.dirname(process.mainModule.filename), 'data', 'data.txt');
     fs.appendFile(fileData, JSON.stringify(req.body), function (err) {
         if (err) throw err;
         console.log('Saved!');
         res.json({ message: 'data saved'});
     });
+}
+exports.getDeviceData = (req, res) => {
+    let max = 10;
+    let min = 1;
+    let k = Math.floor(Math.random() * (+max - +min)) + +min;
+    console.log(k);
+    res.json({ data: { voltage: k } });
 }
