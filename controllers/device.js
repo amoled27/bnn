@@ -15,11 +15,16 @@ exports.getInfo = (req, res) => {
 }
 
 exports.postDeviceData = (req,res) => {
-    const fileData = path.join(path.dirname(process.mainModule.filename), 'data', 'data.txt');
+    const fileData = path.join(path.dirname(process.mainModule.filename), 'data', 'data.json');
     fs.appendFile(fileData, JSON.stringify(req.body), function (err) {
         if (err) throw err;
         console.log('Saved!');
-        res.json({ message: 'data saved'});
+    });
+    const fileData2 = path.join(path.dirname(process.mainModule.filename), 'data', 'data.txt');
+    fs.appendFile(fileData2, req.body, function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+        res.json({ message: 'data saved' });
     });
 }
 exports.getDeviceData = (req, res) => {
