@@ -20,11 +20,6 @@ exports.postDeviceData = (req,res) => {
     fs.appendFile(fileData2, req.body + '###', function (err) {
         if (err) throw err;
         console.log('Saved!');
-    });
-    const fileData = path.join(path.dirname(process.mainModule.filename), 'data', 'data.json');
-    fs.appendFile(fileData, JSON.stringify(req.body) + '###', function (err) {
-        if (err) throw err;
-        console.log('Saved!');
         res.json({ message: 'data saved' });
 
     });
