@@ -2,7 +2,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const deviceRoutes = require('./routes/routes');
+const mongoose = require('mongoose');
 app.use(bodyParser.text());
+
+const MONGODB_URI =
+    'mongodb://amod:hsYTBW6AutMfaTc@cluster0-shard-00-00-mumtp.mongodb.net:27017,cluster0-shard-00-01-mumtp.mongodb.net:27017,cluster0-shard-00-02-mumtp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+
 
 // https://gist.github.com/3750227
 
@@ -23,5 +28,14 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/api', deviceRoutes);
+
+mongoose
+    .connect(MONGODB_URI)
+    .then(result => {
+        app.listen(process.env.PORT || 5000);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
 // app.use('/', { message: hello});
-app.listen(  process.env.PORT || 5000);
