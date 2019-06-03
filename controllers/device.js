@@ -83,7 +83,7 @@ exports.updateDevice = (req, res) => {
 
 exports.getDevice = (req, res, next) => {
     console.log(req);
-    const deviceImei = req.params.id;
+    const deviceImei = req.params.imei;
     console.log(deviceImei);
     Device.findOne({ imei: deviceImei})
         .then(device => {
