@@ -9,7 +9,8 @@ const deviceSchema = new Schema({
         required: true
     },
     voltage: {
-        type: Number
+        type: Number,
+        default: 3
     },
     di: {
         type: Number

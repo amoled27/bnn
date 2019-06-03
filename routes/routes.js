@@ -7,7 +7,7 @@ router.post('/deviceData', deviceController.postDeviceData);
 router.get('/deviceData', deviceController.getDeviceData);
 
 router.post('/add-device', isAuth, deviceController.addDevice);
-router.get('/device-data/:deviceId', deviceController.getDevice);
+router.get('/devicedata/:imei', deviceController.getDevice);
 
 router.get('/alldevicedata', deviceController.getAllDevices);
 router.delete('/deleteDevice/:deviceId', isAuth, deviceController.deleteDevice);

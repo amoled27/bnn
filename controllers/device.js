@@ -82,9 +82,12 @@ exports.updateDevice = (req, res) => {
 }
 
 exports.getDevice = (req, res, next) => {
-    const deviceId = req.params.deviceId;
-    Device.findById(deviceId)
+    console.log(req);
+    const deviceImei = req.params.id;
+    console.log(deviceImei);
+    Device.findOne({ imei: deviceImei})
         .then(device => {
+            console.log(device)
             if (!device) {
                 const error = new Error('Device not found');
                 error.statusCode = 404;

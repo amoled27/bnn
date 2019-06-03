@@ -21,13 +21,18 @@ app.use((req, res, next) => {
     next();
 });
 app.use((req, res, next) => {
-    let bodyJson = JSON.parse(req.body);
-    if (bodyJson) {
-        req.body = bodyJson;
-        next();
+    let obj = req.body;
+    if (!(Object.entries(obj).length === 0 && obj.constructor === Object)) {
+        let bodyJson = JSON.parse(req.body);
+        if (bodyJson) {
+            req.body = bodyJson;
+            next();
+        } else {
+            let error = new Error('No proper Json parsable string');
+            next(error);
+        }
     } else {
-        let error = new Error('No proper Json parsable string');
-        next(error);
+        next();
     }
 });
 app.use('/api/device', deviceRoutes);
