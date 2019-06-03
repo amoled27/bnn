@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const deviceRoutes = require('./routes/routes');
 const mongoose = require('mongoose');
+
+
+const deviceRoutes = require('./routes/routes');
+const authRoutes = require('./routes/auth');
 app.use(bodyParser.text());
 
 const MONGODB_URI =
@@ -11,23 +14,31 @@ const MONGODB_URI =
 
 // https://gist.github.com/3750227
 
-// app.use(function (req, res, next) {
-//     if (req.is('text/*')) {
-//         req.text = '';
-//         req.setEncoding('utf8');
-//         req.on('data', function (chunk) { req.text += chunk });
-//         req.on('end', next);
-//     } else {
-//         next();
-//     }
-// });
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Origin', 'GET, POST, PUT, DELETE, PATCH');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
-app.use('/api', deviceRoutes);
+app.use((req, res, next) => {
+    let bodyJson = JSON.parse(req.body);
+    if (bodyJson) {
+        req.body = bodyJson;
+        next();
+    } else {
+        let error = new Error('No proper Json parsable string');
+        next(error);
+    }
+});
+app.use('/api/device', deviceRoutes);
+app.use('/api/auth', authRoutes);
+
+app.use((error, req, res, next) => {
+    const status = error.statusCode || 500;
+    const message = error.message;
+    const data = error.data;
+    res.status(status).json({ message: message, data: data});
+})
 
 mongoose
     .connect(MONGODB_URI)
@@ -37,5 +48,3 @@ mongoose
     .catch(err => {
         console.log(err);
     });
-
-// app.use('/', { message: hello});
