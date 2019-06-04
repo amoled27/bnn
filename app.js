@@ -14,12 +14,7 @@ const MONGODB_URI =
 
 // https://gist.github.com/3750227
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Origin', 'GET, POST, PUT, DELETE, PATCH');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
+
 app.use((req, res, next) => {
     let obj = req.body;
     if (!(Object.entries(obj).length === 0 && obj.constructor === Object)) {
@@ -34,6 +29,12 @@ app.use((req, res, next) => {
     } else {
         next();
     }
+});
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'GET, POST, PUT, DELETE, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
 });
 app.use('/api/device', deviceRoutes);
 app.use('/api/auth', authRoutes);

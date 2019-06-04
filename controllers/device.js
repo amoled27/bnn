@@ -93,7 +93,7 @@ exports.getDevice = (req, res, next) => {
                 error.statusCode = 404;
                 throw (error);
             }
-            res.status(200).json({ voltage: device.voltage, isDeviceOn: device.isDeviceOn });
+            res.status(200).json({ voltage: device.voltage, isDeviceOn: device.isDeviceOn }); 
         })
         .catch(err => {
             if (!err.statusCode) {
@@ -104,7 +104,6 @@ exports.getDevice = (req, res, next) => {
 }
 
 exports.getAllDevices = (req, res, next) => {
-
     Device.find().then(device => {
         res.status(200).json({ message: 'Device details fetched', device: device })
     }).catch(err => {

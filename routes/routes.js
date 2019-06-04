@@ -6,10 +6,11 @@ const deviceController = require('../controllers/device');
 router.post('/deviceData', deviceController.postDeviceData);
 router.get('/deviceData', deviceController.getDeviceData);
 
-router.post('/add-device', isAuth, deviceController.addDevice);
+router.post('/add-device', deviceController.addDevice);
 router.get('/devicedata/:imei', deviceController.getDevice);
 
 router.get('/alldevicedata', deviceController.getAllDevices);
-router.delete('/deleteDevice/:deviceId', isAuth, deviceController.deleteDevice);
+router.put('/devicedata/:imei', deviceController.updateDevice);
+router.delete('/delete-device/:deviceId', deviceController.deleteDevice);
 
 module.exports = router;
