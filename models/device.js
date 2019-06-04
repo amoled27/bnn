@@ -21,7 +21,9 @@ const deviceSchema = new Schema({
     isDeviceOn: {
         type: Boolean,
         default: false
-    }
+    }, 
+    poleId : String,
+    batVoltage: String
 }, { timestamps: true });
 // #AT3V
 module.exports = mongoose.model('Device', deviceSchema);
