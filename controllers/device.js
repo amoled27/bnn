@@ -87,18 +87,17 @@ exports.updateDevice = (req, res) => {
 }
 
 exports.getDevice = (req, res, next) => {
-    console.log(req);
     const deviceImei = req.params.imei;
-    console.log(deviceImei);
     Device.findOne({ imei: deviceImei })
         .then(device => {
-            console.log(device)
             if (!device) {
                 const error = new Error('Device not found');
                 error.statusCode = 404;
                 throw (error);
             }
-            res.status(200).json({ voltage: device.voltage == 10 ? device.voltage : 'H', isDeviceOn: device.isDeviceOn });
+            const volt = device.voltage < 10 ? device.voltage : 'H';
+            console.log(volt)
+            res.status(200).json({ voltage: volt, isDeviceOn: device.isDeviceOn });
         })
         .catch(err => {
             if (!err.statusCode) {
