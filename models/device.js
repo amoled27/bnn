@@ -19,8 +19,8 @@ const deviceSchema = new Schema({
     deviceTimestamp: String,
     poleId: String,
     isDeviceOn: {
-        type: Boolean,
-        default: false
+        type: Number,
+        default: 0
     }, 
     poleId : String,
     batVoltage: String
