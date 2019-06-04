@@ -50,34 +50,38 @@ exports.deleteDevice = (req, res, next) => {
 }
 
 exports.updateDevice = (req, res) => {
-    const deviceId = req.params.deviceId;
-    Device.findById(deviceId)
+    const deviceImei = req.params.imei;
+    Device.findOne({ imei: deviceImei })
         .then(device => {
             if (!device) {
                 const error = new Error('Device not found');
                 error.statusCode = 404;
                 throw (error);
             }
-            device.name = req.body.name;
-            device.imei = req.body.imei;
-            device.voltage = req.body.voltage;
-            device.di = req.body.di;
-            device.siteName = req.body.siteName;
-            device.time = req.body.time;
+            console.log('deviceee', req.body)
 
-            device.save().then(resp => {
-                res.status(201).json({
-                    message: 'Device Updated successfully!',
-                    device: resp
-                })
-            })
-                .catch(err => {
-                    if (!err.statusCode) {
-                        err.statusCode = 500;
-                    }
-                    next(err);
-                })
+            // console.log
+            device.name = req.body.name || device.name;
+            device.voltage = req.body.voltage || device.voltage;
+            device.di = req.body.di || device.di;
+            device.siteName = req.body.siteName || device.siteName;
+            device.isDeviceOn = req.body.isDeviceOn;
+            console.log("evice", device)
+            return device.save();
         })
+        .then(resp => {
+            res.status(201).json({
+                message: 'Device Updated successfully!',
+                device: resp
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            console.log(err)
+            // next(err);
+        });
 
 }
 
@@ -85,7 +89,7 @@ exports.getDevice = (req, res, next) => {
     console.log(req);
     const deviceImei = req.params.imei;
     console.log(deviceImei);
-    Device.findOne({ imei: deviceImei})
+    Device.findOne({ imei: deviceImei })
         .then(device => {
             console.log(device)
             if (!device) {
@@ -93,7 +97,7 @@ exports.getDevice = (req, res, next) => {
                 error.statusCode = 404;
                 throw (error);
             }
-            res.status(200).json({ voltage: device.voltage, isDeviceOn: device.isDeviceOn }); 
+            res.status(200).json({ voltage: device.voltage, isDeviceOn: device.isDeviceOn });
         })
         .catch(err => {
             if (!err.statusCode) {
