@@ -98,10 +98,7 @@ exports.getDevice = (req, res, next) => {
                 error.statusCode = 404;
                 throw (error);
             }
-            if (device.voltage === 10) {
-                device.voltage = 'H'
-            }
-            res.status(200).json({ voltage: device.voltage, isDeviceOn: device.isDeviceOn });
+            res.status(200).json({ voltage: device.voltage == 10 ? device.voltage : 'H', isDeviceOn: device.isDeviceOn });
         })
         .catch(err => {
             if (!err.statusCode) {
