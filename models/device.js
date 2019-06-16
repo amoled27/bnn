@@ -21,9 +21,14 @@ const deviceSchema = new Schema({
     isDeviceOn: {
         type: Number,
         default: 0
-    }, 
-    poleId : String,
-    batVoltage: String
+    },
+    batVoltage: String,
+    location: String,
+    groupId : {
+        type: Schema.Types.ObjectId,
+        ref : 'Group'
+    },
+    bnnId: String
 }, { timestamps: true });
 // #AT3V
 module.exports = mongoose.model('Device', deviceSchema);

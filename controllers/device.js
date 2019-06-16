@@ -12,16 +12,22 @@ exports.addDevice = (req, res) => {
         siteName: req.body.siteName || '',
         date: req.body.date || '',
         time: req.body.time || '',
+        bnnId: req.body.bnnId,
+        groupId: req.body.groupId
     });
 
     device.save().then(result => {
         res.status(201).json({
             message: 'Device added successfully!',
             device: result
-        })
+        });
     }
     ).catch(err => {
         console.log(err);
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
     })
 }
 
@@ -58,16 +64,15 @@ exports.updateDevice = (req, res) => {
                 error.statusCode = 404;
                 throw (error);
             }
-            console.log('deviceee', req.body)
-
             // console.log
             device.name = req.body.name || device.name;
             device.voltage = req.body.voltage || device.voltage;
             device.batVoltage = req.body.batVoltage ? req.body.batVoltage : device.batVoltage;
-            device.di = req.body.di ? req.body.di :device.di;
+            device.di = req.body.di ? req.body.di : device.di;
             device.siteName = req.body.siteName || device.siteName;
             device.isDeviceOn = req.body.isDeviceOn;
-            console.log("evice", device)
+            device.bnnId = req.body.bnnId;
+            device.groupId = req.body.groupId;
             return device.save();
         })
         .then(resp => {
@@ -88,7 +93,7 @@ exports.updateDevice = (req, res) => {
 
 exports.getDevice = (req, res, next) => {
     const deviceImei = req.params.imei;
-    Device.findOne({ imei: deviceImei })
+    Device.findOne({ imei: deviceImei }).populate('groupId')
         .then(device => {
             if (!device) {
                 const error = new Error('Device not found');
@@ -108,7 +113,7 @@ exports.getDevice = (req, res, next) => {
 }
 
 exports.getAllDevices = (req, res, next) => {
-    Device.find().then(device => {
+    Device.find().populate('groupId').then(device => {
         res.status(200).json({ message: 'Device details fetched', device: device })
     }).catch(err => {
         if (!err.statusCode) {
@@ -118,10 +123,36 @@ exports.getAllDevices = (req, res, next) => {
     })
 }
 
+exports.setGroupToADevice = (req, res, next) => {
+    let groupId = req.body.groupId;
+    let deviceId = req.body.deviceId;
+    Device.findById(deviceId).then(device => {
+        device.groupId = groupId;
+        return device.save();
+    }).then(resp => {
+        res.status(201).json({ message: 'group tokem set', device: resp });
+    }).catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+}
 
 
 
-
+exports.getDeviceOnGroupId = (req, res, next) => {
+    let groupId = req.params.groupId;
+    console.log(groupId)
+    Device.find({ groupId: groupId}).populate('groupId').then( devices => {
+        res.status(200).json({ message: 'Devices fetched as per groupId',  devices: devices});
+    }).catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+}
 // --------------
 
 exports.getDeviceVoltage = (req, res) => {

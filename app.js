@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 
 const deviceRoutes = require('./routes/routes');
 const authRoutes = require('./routes/auth');
+const groupRoutes = require('./routes/group');
+const areaRoutes = require('./routes/area');
 app.use(bodyParser.text());
 
 const MONGODB_URI =
@@ -17,7 +19,6 @@ app.use((req, res, next) => {
     let obj = req.body;
         if (!(Object.entries(obj).length === 0 && obj.constructor === Object)) {
             let bodyJson = JSON.parse(req.body);
-            console.log('bodyJson', bodyJson)
             if (bodyJson) {
                 req.body = bodyJson;
                 next();
@@ -38,6 +39,8 @@ app.use((req, res, next) => {
 });
 app.use('/api/device', deviceRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/area', areaRoutes);
+app.use('/api/group', groupRoutes);
 
 app.use((error, req, res, next) => {
     const status = error.statusCode || 500;
