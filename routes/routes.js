@@ -4,6 +4,7 @@ const isAuth = require('../middleware/isAuth');
 const deviceController = require('../controllers/device');
 
 router.post('/deviceData', deviceController.postDeviceData);
+router.get('/test', deviceController.test);
 router.get('/deviceData', deviceController.getDeviceData);
 
 router.post('/add-device', deviceController.addDevice);
