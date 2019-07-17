@@ -3,8 +3,8 @@ const router = express.Router();
 const isAuth = require('../middleware/isAuth');
 const groupController = require('../controllers/group');
 
-router.post('/addgroup', groupController.addGroup);
-router.get('/allgroups', groupController.getAllGroups);
-router.put('/setgroupvoltage', groupController.setGroupVoltage);
+router.post('/addgroup', isAuth, groupController.addGroup);
+router.get('/allgroups', isAuth, groupController.getAllGroups);
+router.put('/setgroupvoltage', isAuth, groupController.setGroupVoltage);
 
 module.exports = router;
