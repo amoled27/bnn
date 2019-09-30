@@ -13,13 +13,16 @@ exports.addDevice = (req, res) => {
         date: req.body.date || '',
         time: req.body.time || '',
         bnnId: req.body.bnnId,
-        groupId: req.body.groupId
+        groupId: req.body.groupId,
+        poleId: req.body.poleId
     });
-
+    console.log(device, 'device')
     device.save().then(result => {
+        console.log(result, 'result'); 
         res.status(201).json({
             message: 'Device added successfully!',
-            device: result
+            device: result,
+            status: 201
         });
     }
     ).catch(err => {
@@ -73,6 +76,7 @@ exports.updateDevice = (req, res) => {
             device.isDeviceOn = req.body.isDeviceOn;
             device.bnnId = req.body.bnnId;
             device.groupId = req.body.groupId;
+            device.poleId = req.body.poleId;
             return device.save();
         })
         .then(resp => {

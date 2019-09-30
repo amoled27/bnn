@@ -13,7 +13,7 @@ const deviceSchema = new Schema({
         default: 3
     },
     di: {
-        type: Number
+        type: Number 
     },
     siteName: String,
     deviceTimestamp: String,
@@ -28,7 +28,8 @@ const deviceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref : 'Group'
     },
-    bnnId: String
+    bnnId: String,
+    poleId: String
 }, { timestamps: true });
 // #AT3V
 module.exports = mongoose.model('Device', deviceSchema);
