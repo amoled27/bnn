@@ -47,7 +47,7 @@ exports.deleteDevice = (req, res, next) => {
             return Device.findByIdAndRemove(device)
         })
         .then(result => {
-            res.status(200).json({ message: 'Device deleted' })
+            res.status(200).json({ message: 'Device deleted' , status: 200})
         })
         .catch(err => {
             if (!err.statusCode) {
