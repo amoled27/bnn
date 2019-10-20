@@ -148,8 +148,8 @@ exports.setGroupToADevice = (req, res, next) => {
 exports.getDeviceOnGroupId = (req, res, next) => {
     let groupId = req.params.groupId;
     console.log(groupId)
-    Device.find({ groupId: groupId}).populate('groupId').then( devices => {
-        res.status(200).json({ message: 'Devices fetched as per groupId',  devices: devices});
+    Device.find({ groupId: groupId }).populate('groupId').then(devices => {
+        res.status(200).json({ message: 'Devices fetched as per groupId', devices: devices });
     }).catch(err => {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -172,6 +172,9 @@ exports.getInfo = (req, res) => {
     res.json({ data: { voltage: 7 } });
 }
 
+exports.test = (req, res) => {
+    res.json({ data: 'working' });
+}
 exports.postDeviceData = (req, res) => {
 
     // const device = new Device({

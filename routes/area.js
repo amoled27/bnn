@@ -3,7 +3,7 @@ const router = express.Router();
 const isAuth = require('../middleware/isAuth');
 const areaController = require('../controllers/area');
 
-router.post('/addarea', areaController.addArea);
-router.get('/allareas', areaController.getAllAreas);
+router.post('/addarea', isAuth, areaController.addArea);
+router.get('/allareas', isAuth, areaController.getAllAreas);
 
 module.exports = router;
