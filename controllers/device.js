@@ -59,6 +59,7 @@ exports.deleteDevice = (req, res, next) => {
 }
 
 exports.updateDevice = (req, res) => {
+    console.log('postdata crash')
     const deviceImei = req.params.imei;
     Device.findOne({ imei: deviceImei })
         .then(device => {
@@ -96,6 +97,7 @@ exports.updateDevice = (req, res) => {
 }
 
 exports.getDevice = (req, res, next) => {
+    console.log('connection established');
     const deviceImei = req.params.imei;
     Device.findOne({ imei: deviceImei }).populate('groupId')
         .then(device => {
@@ -105,7 +107,7 @@ exports.getDevice = (req, res, next) => {
                 throw (error);
             }
             const volt = device.voltage < 10 ? device.voltage : 'H';
-            console.log(volt)
+            console.log(device, 'device')
             res.status(200).json({ voltage: volt, isDeviceOn: device.isDeviceOn });
         })
         .catch(err => {
