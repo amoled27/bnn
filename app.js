@@ -18,6 +18,7 @@ const MONGODB_URI =
 app.use((req, res, next) => {
     let obj = req.body;
         if (!(Object.entries(obj).length === 0 && obj.constructor === Object)) {
+            console.log('json parsing');
             let bodyJson = JSON.parse(req.body);
             if (bodyJson) {
                 req.body = bodyJson;
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
         }
 });
 app.use((req, res, next) => {
+    console.log('CORS');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -43,6 +45,7 @@ app.use('/api/area', areaRoutes);
 app.use('/api/group', groupRoutes);
 
 app.use((error, req, res, next) => {
+    console.log('error', error);
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
