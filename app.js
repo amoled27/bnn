@@ -10,12 +10,14 @@ const groupRoutes = require('./routes/group');
 const areaRoutes = require('./routes/area');
 app.use(bodyParser.text());
 
-const MONGODB_URI =
-    'mongodb://amod:hsYTBW6AutMfaTc@cluster0-shard-00-00-mumtp.mongodb.net:27017,cluster0-shard-00-01-mumtp.mongodb.net:27017,cluster0-shard-00-02-mumtp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+// const MONGODB_URI =
+//     'mongodb://amod:hsYTBW6AutMfaTc@cluster0-shard-00-00-mumtp.mongodb.net:27017,cluster0-shard-00-01-mumtp.mongodb.net:27017,cluster0-shard-00-02-mumtp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+const MONGODB_URI = 'mongodb://admin:myadminpassword@165.22.37.153:27017/admin';
 
 
 
 app.use((req, res, next) => {
+    console.log('jhkhlkjlkljk');
     let obj = req.body;
         if (!(Object.entries(obj).length === 0 && obj.constructor === Object)) {
             console.log('json parsing');
