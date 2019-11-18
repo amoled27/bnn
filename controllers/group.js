@@ -23,6 +23,7 @@ exports.addGroup = (req, res) => {
 exports.getAllGroups = (req, res, next) => {
 
     Group.find().populate('areaId') .then ( grp => {
+        console.log(grp);
         res.status(200).json({ message: 'Groups fetched successfully', groups: grp })
     }).catch( err => {
 

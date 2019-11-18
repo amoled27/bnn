@@ -16,5 +16,6 @@ router.get('/alldevicedata', isAuth, deviceController.getAllDevices);
 router.post('/devicedata/:imei', deviceController.updateDevice);
 router.delete('/delete-device/:deviceId', isAuth, deviceController.deleteDevice);
 router.get('/devicebygroup/:groupId',isAuth, deviceController.getDeviceOnGroupId);
+router.post('/updateMultipleDevices', isAuth, deviceController.updateMultipleDevices);
 
 module.exports = router;

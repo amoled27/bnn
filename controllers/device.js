@@ -18,7 +18,7 @@ exports.addDevice = (req, res) => {
     });
     console.log(device, 'device')
     device.save().then(result => {
-        console.log(result, 'result'); 
+        console.log(result, 'result');
         res.status(201).json({
             message: 'Device added successfully!',
             device: result,
@@ -47,7 +47,7 @@ exports.deleteDevice = (req, res, next) => {
             return Device.findByIdAndRemove(device)
         })
         .then(result => {
-            res.status(200).json({ message: 'Device deleted' , status: 200})
+            res.status(200).json({ message: 'Device deleted', status: 200 })
         })
         .catch(err => {
             if (!err.statusCode) {
@@ -93,6 +93,47 @@ exports.updateDevice = (req, res) => {
             console.log(err)
             // next(err);
         });
+
+}
+
+function updateMany(arr) {
+    arr.forEach(element => {
+        Device.update({imei: element.imei}, element)
+        .then(el => {
+
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        })
+    });
+}
+
+exports.updateMultipleDevices = (req, res) => {
+
+let data = req.body;
+data.forEach( (el, index, arr )=> {
+
+    Device.updateOne({imei: el.imei},{groupId: el.groupId})
+    .then(el => {
+       
+    })
+    .catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+    if (arr.length - 1 === index) {
+        res.status(201).json({
+            message: 'Device Updated successfully!',
+            statusCode: 201
+        });
+    }
+})
+   
 
 }
 
