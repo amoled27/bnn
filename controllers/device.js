@@ -69,6 +69,7 @@ exports.updateDevice = (req, res) => {
                 throw (error);
             }
             // console.log
+            device.imei = req.body.imei ||  device.imei;
             device.name = req.body.name || device.name;
             device.voltage = req.body.voltage || device.voltage;
             device.batVoltage = req.body.batVoltage ? req.body.batVoltage : device.batVoltage;
